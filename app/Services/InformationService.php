@@ -9,7 +9,7 @@ use Usoft\Exceptions\UzmobileErrorException;
 class InformationService
 {
     protected $url;
-    protected $serviceId = 141;
+    protected $serviceId = 100;
 
     public function __construct()
     {
