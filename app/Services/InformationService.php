@@ -13,7 +13,7 @@ class InformationService
 
     public function __construct()
     {
-        $this->url = env('UZMOBILE_API_HOST');
+        $this->url = env('API_HOST');
 //        $this->http = Http::baseUrl($this->url)
 
     }

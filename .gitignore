@@ -33,3 +33,4 @@ charges-database
 docker
 questionnaire-db
 charges-premium-database
+.gitignore

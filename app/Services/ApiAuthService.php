@@ -16,16 +16,16 @@ class ApiAuthService
 
     public function __construct()
     {
-        $this->url = env('UZMOBILE_API_HOST');
-        $this->login = env('UZMOBILE_API_LOGIN');
-        $this->password = env('UZMOBILE_API_PASSWORD');
+        $this->url = env('API_HOST');
+        $this->login = env('API_LOGIN');
+        $this->password = env('API_PASSWORD');
     }
 
     public function apiLogin()
     {
-        Cache::forget('uzmobile_api_token');
+        Cache::forget('api_token');
         try {
-            $value = Cache::remember('uzmobile_api_token', $this->seconds, function () {
+            $value = Cache::remember('api_token', $this->seconds, function () {
 
                 $login_response = Http::get($this->url . '/openapi/v1/tokens-stub/get?login=' . $this->login . '&password=' . $this->password);
 
@@ -34,7 +34,7 @@ class ApiAuthService
                 return json_decode($xml);
             });
         }catch ( \Exception $exception){
-            throw new UzmobileErrorException('Uzmobile auth api not working now, we can\'t get SESSION_ID',$exception->getCode());
+            throw new UzmobileErrorException('auth api not working now, we can\'t get SESSION_ID',$exception->getCode());
         }
 
         return $value;
@@ -42,13 +42,13 @@ class ApiAuthService
 
     public function getToken()
     {
-        if (Cache::has('uzmobile_api_token')) {
+        if (Cache::has('api_token')) {
 
-            $token = Cache::get('uzmobile_api_token');
+            $token = Cache::get('api_token');
 
             return $token->SESSION_ID;
         } else
-        Cache::forget('uzmobile_api_token');
+        Cache::forget('api_token');
 
         $token = $this->apiLogin();
 
